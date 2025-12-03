@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Fontes Google</title>
+
+    <!-- Importar fontes do Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Pacifico&family=Black+Ops+One&family=Dancing+Script:wght@400;700&family=Great+Vibes&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border: 1px solid #e0e0e0;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .font-sample {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .font-name {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .font-text {
+            font-size: 48px;
+            color: #333;
+        }
+
+        .anton { font-family: 'Anton', sans-serif; }
+        .arial-black { font-family: 'Arial Black', sans-serif; }
+        .pacifico { font-family: 'Pacifico', cursive; }
+        .black-ops { font-family: 'Black Ops One', cursive; }
+        .dancing { font-family: 'Dancing Script', cursive; }
+        .great-vibes { font-family: 'Great Vibes', cursive; }
+        .cinzel { font-family: 'Cinzel Decorative', cursive; }
+
+        .status {
+            text-align: center;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Teste de Fontes - Búfalo Growler</h1>
+
+        <div id="status" class="status">
+            Fontes carregadas do Google Fonts
+        </div>
+
+        <div class="font-sample">
+            <div class="font-name">1 - Britanic Bold (Anton)</div>
+            <div class="font-text anton">Búfalo Growler</div>
+        </div>
+
+        <div class="font-sample">
+            <div class="font-name">2 - Arial Black</div>
+            <div class="font-text arial-black">Búfalo Growler</div>
+        </div>
+
+        <div class="font-sample">
+            <div class="font-name">3 - Popstar (Pacifico)</div>
+            <div class="font-text pacifico">Búfalo Growler</div>
+        </div>
+
+        <div class="font-sample">
+            <div class="font-name">4 - Stencil (Black Ops One)</div>
+            <div class="font-text black-ops">Búfalo Growler</div>
+        </div>
+
+        <div class="font-sample">
+            <div class="font-name">5 - Beautiful Butterfly (Dancing Script)</div>
+            <div class="font-text dancing">Búfalo Growler</div>
+        </div>
+
+        <div class="font-sample">
+            <div class="font-name">6 - Autography (Great Vibes)</div>
+            <div class="font-text great-vibes">Búfalo Growler</div>
+        </div>
+
+        <div class="font-sample">
+            <div class="font-name">7 - Harry Potter (Cinzel Decorative)</div>
+            <div class="font-text cinzel">Búfalo Growler</div>
+        </div>
+    </div>
+
+    <script>
+        // Verificar se as fontes foram carregadas
+        document.fonts.ready.then(() => {
+            console.log('Todas as fontes carregadas!');
+            console.log('Total de fontes:', document.fonts.size);
+
+            // Listar todas as fontes carregadas
+            document.fonts.forEach(font => {
+                console.log(`Fonte: ${font.family}, Status: ${font.status}`);
+            });
+        });
+    </script>
+</body>
+</html>

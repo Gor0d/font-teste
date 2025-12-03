@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Preview de Fontes - Búfalo Growler</title>
+
+    <!-- Importar fontes do Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Pacifico&family=Black+Ops+One&family=Dancing+Script:wght@400;700&family=Great+Vibes&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border: 1px solid #e0e0e0;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .status {
+            text-align: center;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .status.loading {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        .status.ready {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+
+        .status.error {
+            background: #ffebee;
+            color: #d32f2f;
+        }
+
+        .font-selector {
+            margin-bottom: 30px;
+        }
+
+        .font-selector label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .font-selector select {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            transition: border-color 0.3s;
+            -webkit-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+        }
+
+        .font-selector select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .preview-area {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 40px 30px;
+            margin-bottom: 20px;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .preview-text {
+            font-size: 48px;
+            color: #333;
+            word-break: break-word;
+            line-height: 1.4;
+            transition: font-family 0.3s ease;
+        }
+
+        .text-input {
+            margin-bottom: 20px;
+        }
+
+        .text-input label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .text-input input {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            transition: border-color 0.3s;
+        }
+
+        .text-input input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .font-list {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+
+        .font-list h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .font-item {
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .font-item.loaded {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .font-item.error {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #1565c0;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .preview-text {
+                font-size: 36px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Preview de Fontes</h1>
+        <p class="subtitle">Búfalo Growler</p>
+
+        <div id="status" class="status loading">
+            Carregando fontes...
+        </div>
+
+        <div class="text-input">
+            <label for="customText">Digite seu texto:</label>
+            <input 
+                type="text" 
+                id="customText" 
+                placeholder="Digite aqui..." 
+                value="Búfalo Growler"
+            >
+        </div>
+
+        <div class="font-selector">
+            <label for="fontSelect">Escolha uma fonte:</label>
+            <select id="fontSelect">
+                <option value="">-- Selecione uma fonte --</option>
+                <option value="Britanic Bold">1 - Britanic Bold</option>
+                <option value="Arial Black">2 - Arial Black</option>
+                <option value="Popstar">3 - Popstar</option>
+                <option value="Stencil">4 - Stencil</option>
+                <option value="Beautiful Butterfly">5 - Beautiful Butterfly</option>
+                <option value="Autography">6 - Autography</option>
+                <option value="Harry Potter">7 - Harry Potter</option>
+            </select>
+        </div>
+
+        <div class="preview-area">
+            <div id="previewText" class="preview-text">
+                Selecione uma fonte
+            </div>
+        </div>
+
+        <div class="info">
+            <strong>Fontes Google Fonts:</strong> Anton (Britanic Bold), Pacifico (Popstar), Black Ops One (Stencil),
+            Dancing Script (Beautiful Butterfly), Great Vibes (Autography), Cinzel Decorative (Harry Potter).
+        </div>
+
+        <div class="font-list">
+            <h3>Status das Fontes:</h3>
+            <div id="fontStatus"></div>
+        </div>
+    </div>
+
+    <script>
+        // Lista de fontes para testar
+        const fonts = [
+            'Britanic Bold',
+            'Arial Black',
+            'Popstar',
+            'Stencil',
+            'Beautiful Butterfly',
+            'Autography',
+            'Harry Potter'
+        ];
+
+        // Elementos do DOM
+        const fontSelect = document.getElementById('fontSelect');
+        const previewText = document.getElementById('previewText');
+        const customText = document.getElementById('customText');
+        const statusDiv = document.getElementById('status');
+        const fontStatusDiv = document.getElementById('fontStatus');
+
+        // Contador de fontes carregadas
+        let fontsLoaded = 0;
+        let fontsWithError = 0;
+
+        // Mapa de fontes para Google Fonts
+        const fontMap = {
+            'Britanic Bold': 'Anton',
+            'Arial Black': 'Arial Black',
+            'Popstar': 'Pacifico',
+            'Stencil': 'Black Ops One',
+            'Beautiful Butterfly': 'Dancing Script',
+            'Autography': 'Great Vibes',
+            'Harry Potter': 'Cinzel Decorative'
+        };
+
+        // Função para atualizar o preview
+        function updatePreview() {
+            const selectedFont = fontSelect.value;
+            const text = customText.value || 'Digite algo acima';
+
+            if (selectedFont) {
+                const googleFont = fontMap[selectedFont] || selectedFont;
+                previewText.style.fontFamily = `"${googleFont}", cursive, sans-serif`;
+                previewText.textContent = text;
+            } else {
+                previewText.style.fontFamily = '-apple-system, sans-serif';
+                previewText.textContent = 'Selecione uma fonte';
+            }
+        }
+
+        // Função para adicionar status de fonte
+        function addFontStatus(fontName, success, error = null) {
+            const item = document.createElement('div');
+            item.className = `font-item ${success ? 'loaded' : 'error'}`;
+            item.textContent = `${success ? '✓' : '✗'} ${fontName}${error ? ` - ${error}` : ''}`;
+            fontStatusDiv.appendChild(item);
+        }
+
+        // Função para carregar fontes do Google Fonts
+        async function loadFonts() {
+            console.log('Iniciando carregamento de fontes do Google Fonts...');
+
+            // Aguardar fontes estarem prontas
+            await document.fonts.ready;
+
+            for (const fontName of fonts) {
+                try {
+                    const googleFont = fontMap[fontName] || fontName;
+
+                    // Tentar carregar a fonte do Google
+                    await document.fonts.load(`48px "${googleFont}"`);
+
+                    // Verificar se a fonte está disponível
+                    const available = document.fonts.check(`48px "${googleFont}"`);
+
+                    if (available) {
+                        console.log(`✓ Fonte carregada: ${fontName} (${googleFont})`);
+                        addFontStatus(fontName, true, `Google Font: ${googleFont}`);
+                        fontsLoaded++;
+                    } else {
+                        console.warn(`⚠ Aguardando: ${fontName} (${googleFont})`);
+                        // Dar mais tempo para carregar
+                        await new Promise(resolve => setTimeout(resolve, 300));
+                        const retryCheck = document.fonts.check(`48px "${googleFont}"`);
+                        if (retryCheck) {
+                            console.log(`✓ Fonte carregada após retry: ${fontName}`);
+                            addFontStatus(fontName, true, `Google Font: ${googleFont}`);
+                            fontsLoaded++;
+                        } else {
+                            addFontStatus(fontName, false, 'Erro ao carregar');
+                            fontsWithError++;
+                        }
+                    }
+                } catch (error) {
+                    console.error(`✗ Erro ao carregar ${fontName}:`, error);
+                    addFontStatus(fontName, false, error.message);
+                    fontsWithError++;
+                }
+            }
+
+            // Atualizar status geral
+            updateGeneralStatus();
+        }
+
+        // Atualizar status geral
+        function updateGeneralStatus() {
+            if (fontsWithError === 0 && fontsLoaded === fonts.length) {
+                statusDiv.className = 'status ready';
+                statusDiv.textContent = `✓ Todas as ${fontsLoaded} fontes do Google Fonts carregadas!`;
+            } else if (fontsLoaded > 0) {
+                statusDiv.className = 'status';
+                statusDiv.textContent = `${fontsLoaded} fontes OK, ${fontsWithError} com erro`;
+            } else {
+                statusDiv.className = 'status error';
+                statusDiv.textContent = 'Erro ao carregar fontes do Google';
+            }
+        }
+
+        // Event listeners
+        fontSelect.addEventListener('change', updatePreview);
+        customText.addEventListener('input', updatePreview);
+
+        // Aguardar o DOM estar pronto e carregar fontes
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                setTimeout(loadFonts, 100);
+            });
+        } else {
+            setTimeout(loadFonts, 100);
+        }
+
+        // Log de debug
+        console.log('Preview de fontes iniciado');
+        console.log('User Agent:', navigator.userAgent);
+        console.log('Fontes disponíveis:', fonts);
+    </script>
+</body>
+</html>
