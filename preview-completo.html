@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Preview de Fontes - Búfalo Growler (24 Fontes)</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Allura&family=Pacifico&family=Cookie&family=Black+Ops+One&family=Dancing+Script:wght@400;700&family=Great+Vibes&family=Sacramento&family=Satisfy&family=Alex+Brush&family=Cinzel+Decorative:wght@400;700&family=Bebas+Neue&family=Press+Start+2P&family=Teko:wght@700&family=Fredoka+One&family=Chango&display=swap" rel="stylesheet">
+
+    <!-- CDN Fonts para fontes não disponíveis no Google -->
+    <link href="https://fonts.cdnfonts.com/css/waltograph" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/minecraft-4" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/moana" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/batman-forever" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/stranger-things" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/harry-potter" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/dealerplate-california" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border: 1px solid #e0e0e0;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .status {
+            text-align: center;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .status.loading {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        .status.ready {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+
+        .font-selector {
+            margin-bottom: 30px;
+        }
+
+        .font-selector label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .font-selector select {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            transition: border-color 0.3s;
+            -webkit-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+        }
+
+        .font-selector select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .preview-area {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 40px 30px;
+            margin-bottom: 20px;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .preview-text {
+            font-size: 48px;
+            color: #333;
+            word-break: break-word;
+            line-height: 1.4;
+            transition: font-family 0.3s ease;
+        }
+
+        .text-input {
+            margin-bottom: 20px;
+        }
+
+        .text-input label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .text-input input {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            transition: border-color 0.3s;
+        }
+
+        .text-input input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #1565c0;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .preview-text {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Preview de Fontes Completo</h1>
+        <p class="subtitle">Búfalo Growler - 24 Fontes</p>
+
+        <div id="status" class="status loading">
+            Carregando fontes...
+        </div>
+
+        <div class="text-input">
+            <label for="customText">Digite seu texto:</label>
+            <input
+                type="text"
+                id="customText"
+                placeholder="Digite aqui..."
+                value="Búfalo Growler"
+            >
+        </div>
+
+        <div class="font-selector">
+            <label for="fontSelect">Escolha uma fonte:</label>
+            <select id="fontSelect">
+                <option value="">-- Selecione uma fonte --</option>
+                <optgroup label="Fontes Padrão">
+                    <option value="Anton">1 - Britanic Bold</option>
+                    <option value="Allura">2 - Hughheid</option>
+                    <option value="Arial Black">3 - Arial Black</option>
+                    <option value="Great Vibes">4 - Jetron Signature</option>
+                    <option value="Bebas Neue">5 - BUFALO GROWLER</option>
+                    <option value="Black Ops One">6 - STENCIL</option>
+                </optgroup>
+                <optgroup label="Manuscrita">
+                    <option value="Pacifico">7 - Popstar</option>
+                    <option value="Cookie">8 - Feelin Sweet</option>
+                    <option value="Dancing Script">9 - Beautiful Butterfly</option>
+                    <option value="Sacramento">10 - Happy February</option>
+                    <option value="Satisfy">11 - Madina</option>
+                    <option value="Alex Brush">12 - Autography</option>
+                </optgroup>
+                <optgroup label="Fantasia">
+                    <option value="Waltograph">13 - Disney</option>
+                    <option value="Minecraft">14 - MINECRAFTER</option>
+                    <option value="Moana">15 - MOANA</option>
+                    <option value="Batman Forever">16 - BATMAN</option>
+                    <option value="Stranger Things">17 - Stranger Things</option>
+                    <option value="Cinzel Decorative">18 - Harry Potter</option>
+                </optgroup>
+                <optgroup label="Forma">
+                    <option value="Press Start 2P">19 - PARAENSE</option>
+                    <option value="Teko">20 - TS BLOCK</option>
+                    <option value="Times New Roman">21 - Times New Roman</option>
+                    <option value="Fredoka One">22 - Buba</option>
+                    <option value="Dealerplate California">23 - DEALERPLATE CA.</option>
+                    <option value="Chango">24 - TT Chocolates</option>
+                </optgroup>
+            </select>
+        </div>
+
+        <div class="preview-area">
+            <div id="previewText" class="preview-text">
+                Selecione uma fonte
+            </div>
+        </div>
+
+        <div class="info">
+            <strong>Sobre as fontes:</strong><br>
+            • <strong>Fontes do Google:</strong> Anton, Great Vibes, Pacifico, Dancing Script, Black Ops One, Cinzel Decorative, Press Start 2P<br>
+            • <strong>Fontes do CDNFonts:</strong> Disney (Waltograph), Minecraft, Moana, Batman, Stranger Things, Harry Potter, Dealerplate<br>
+            • <strong>Fontes do Sistema:</strong> Arial Black, Times New Roman<br>
+            • Algumas fontes são aproximações das originais devido a licenças
+        </div>
+    </div>
+
+    <script>
+        const fontSelect = document.getElementById('fontSelect');
+        const previewText = document.getElementById('previewText');
+        const customText = document.getElementById('customText');
+        const statusDiv = document.getElementById('status');
+
+        // Função para atualizar o preview
+        function updatePreview() {
+            const selectedFont = fontSelect.value;
+            const text = customText.value || 'Digite algo acima';
+
+            if (selectedFont) {
+                previewText.style.fontFamily = `"${selectedFont}", cursive, sans-serif`;
+                previewText.textContent = text;
+            } else {
+                previewText.style.fontFamily = '-apple-system, sans-serif';
+                previewText.textContent = 'Selecione uma fonte';
+            }
+        }
+
+        // Event listeners
+        fontSelect.addEventListener('change', updatePreview);
+        customText.addEventListener('input', updatePreview);
+
+        // Aguardar fontes carregarem
+        async function loadFonts() {
+            try {
+                await document.fonts.ready;
+                console.log('Fontes carregadas:', document.fonts.size);
+
+                statusDiv.className = 'status ready';
+                statusDiv.textContent = `✓ Sistema pronto - ${document.fonts.size} fontes disponíveis`;
+            } catch (error) {
+                console.error('Erro ao carregar fontes:', error);
+                statusDiv.className = 'status ready';
+                statusDiv.textContent = 'Sistema pronto';
+            }
+        }
+
+        // Iniciar carregamento
+        setTimeout(loadFonts, 500);
+
+        console.log('Preview iniciado');
+        console.log('User Agent:', navigator.userAgent);
+    </script>
+</body>
+</html>
